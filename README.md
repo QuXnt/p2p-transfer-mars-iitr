@@ -65,9 +65,9 @@ The application is structured to be easily deployed to modern cloud hosting prov
 3. Deploy the application.
 
 ### Live Deployment Links
-- **Frontend App:** [Insert your deployed frontend URL here]
-- **Backend API:** [Insert your deployed backend URL here]
+- **Frontend App:** https://p2p-transfer-mars-iitr.vercel.app/
+- **Backend API:** https://p2p-transfer-mars-iitr.onrender.com
 
 ## Demonstration
-Check out the video demonstration of the app transferring a file between two devices:
-[Insert Demo Video Link Here]
+Check out the video demonstration of the app transferring a file between two different browser windows:
+https://drive.google.com/file/d/1TvWiolSh7KxwuPw-W7EUipTEptMjzu7K/view?usp=sharing
