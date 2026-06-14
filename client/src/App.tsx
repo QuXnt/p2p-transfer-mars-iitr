@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from 'react'
 import { WebRTCManager } from './lib/webrtc'
 import type { PeerConnectionState, TransferProgress } from './lib/webrtc'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/ui/card'
 import { Button } from './components/ui/button'
 import { Progress } from './components/ui/progress'
 import { useToast } from './hooks/use-toast'
-import { Copy, UploadCloud, DownloadCloud, File, CheckCircle2, AlertCircle } from 'lucide-react'
+import { Copy, UploadCloud, DownloadCloud, File, CheckCircle2 } from 'lucide-react'
 
 function App() {
   const [roomId, setRoomId] = useState<string>('')
