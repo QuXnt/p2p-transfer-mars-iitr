@@ -74,7 +74,15 @@ function App() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setFileToTransfer(e.target.files[0])
+      const file = e.target.files[0]
+      
+      // Enforce 50MB limit
+      if (file.size > 50 * 1024 * 1024) {
+        toast({ title: 'File too large', description: 'Please select a file smaller than 50MB.', variant: 'destructive' })
+        return
+      }
+
+      setFileToTransfer(file)
       
       // Generate the room only after a file is selected
       if (!roomId && !isReceiver) {
@@ -126,25 +134,40 @@ function App() {
             <div className="space-y-4">
               {/* File Selection Box */}
               {!progress && !roomId && (
-                <div className="border-2 border-dashed rounded-xl p-8 text-center transition-colors hover:bg-muted/50">
+                <div 
+                  className="border-2 border-dashed rounded-xl p-8 text-center transition-colors hover:bg-muted/50 cursor-pointer"
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                      const file = e.dataTransfer.files[0];
+                      if (file.size > 50 * 1024 * 1024) {
+                        toast({ title: 'File too large', description: 'Please select a file smaller than 50MB.', variant: 'destructive' });
+                        return;
+                      }
+                      setFileToTransfer(file);
+                      const newRoom = Math.random().toString(36).substring(2, 9);
+                      setRoomId(newRoom);
+                      webrtcManager.current?.createRoom(newRoom);
+                    }
+                  }}
+                  onClick={() => document.getElementById('file-upload')?.click()}
+                >
                   <input
                     type="file"
                     id="file-upload"
                     className="hidden"
                     onChange={handleFileChange}
                   />
-                  <label
-                    htmlFor="file-upload"
-                    className="cursor-pointer flex flex-col items-center justify-center gap-3"
-                  >
-                    <div className="p-3 bg-muted rounded-full">
+                  <div className="flex flex-col items-center justify-center gap-3">
+                    <div className="p-3 bg-muted rounded-full pointer-events-none">
                       <UploadCloud className="h-6 w-6" />
                     </div>
-                    <div className="space-y-1">
+                    <div className="space-y-1 pointer-events-none">
                       <p className="text-sm font-medium">Click or drag file to select</p>
                       <p className="text-xs text-muted-foreground">Maximum file size: 50MB</p>
                     </div>
-                  </label>
+                  </div>
                 </div>
               )}
               
