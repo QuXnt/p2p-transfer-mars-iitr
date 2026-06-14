@@ -2,11 +2,15 @@
 
 A modern, fast, and secure peer-to-peer file sharing application built with React, WebRTC, and Socket.io. It allows users to instantly transfer files directly between browsers across different networks without storing any data on an intermediate server.
 
-## Features
-- **True P2P File Transfer:** Files are streamed directly between clients via WebRTC Data Channels. No files are saved to the server.
-- **Cross-Browser Compatible:** Extensive fallback mechanisms (including TURN servers and strict SCTP message fragmentation) ensure seamless transfers between Chromium browsers (Chrome, Edge) and Firefox.
-- **Instant Auto-Send Flow:** Senders simply upload a file, share the generated link, and the file instantly begins streaming the moment the receiver connects. 
-- **Modern UI:** Clean, responsive, and minimalist user interface built with TailwindCSS and shadcn/ui.
+## Core MVP Requirements Met
+- **Share Room Creation:** Native HTML5 drag-and-drop zone to upload files (with strict <50MB browser memory limit enforcement) and unique Room ID generation.
+- **Signaling Handshake:** Lightweight Node.js & Socket.io backend to coordinate WebRTC offers and answers.
+- **Direct P2P Transfer:** Uses the browser FileReader API and transfers data directly via WebRTC data channels.
+- **Basic Chunk Verification:** Implements SHA-256 cryptographic hashing on every file chunk before and after transfer to guarantee zero data corruption.
+- **Progress Indicators & Connection Status:** Real-time UI displaying transfer percentage, transfer speed (MB/s), and active connection states.
+- **Graceful Disconnect Handling:** Robust state management ensures no crashes if a tab is closed, gracefully notifying the remaining user.
+- **Auto-Download:** Reassembles incoming verified chunks in memory and automatically triggers a local download.
+- **Cross-Browser Reliability:** Implements strict SCTP message fragmentation limits (8KB chunks) and utilizes free OpenRelay TURN servers to bypass restrictive NATs and guarantee connectivity between browsers like Firefox and Chrome.
 
 ## Technologies Used
 - **Frontend:** React 18, Vite, TailwindCSS, shadcn/ui, WebRTC API
